@@ -57,10 +57,12 @@ specs = do
             unifica (Fun "f" [g x, Fun "h" [x, Var "u"]]) (Fun "f" [z,Fun "h" [Fun "f" [y,y], z]]) `shouldMatchList` [[("z",Fun "g" [Fun "f" [Var "y",Var "y"]]),("x",Fun "f" [Var "y",Var "y"]),("u",Fun "g" [Fun "f" [Var "y",Var "y"]])]]
         it "Terminos unificables 2" $ do
             unifica (Fun "Q" [x, f a]) (Fun "Q" [y,z]) `shouldMatchList` [[("x",Var "y"),("z",Fun "f" [Fun "a" []])]]
+        it "Terminos unificables 3" $ do
+            unifica (Fun "f" [w, Fun "f" [x, Fun "h" [z]]]) (Fun "f" [Fun "g" [x], Fun "f" [x,y]]) `shouldMatchList` [[("w", Fun "g" [Var "x"]),("y",Fun "h" [Var "z"])]] 
         it "Terminos NO unificables" $ do
             unifica (Fun "f" [ x, y, x ]) (Fun "f" [ y, g x, x ]) `shouldBe` []
         it "Terminos NO unificables 2" $ do
-            unifica (Fun "Q" [y,z]) (Fun  "Q" [f z, z]) `shouldBe` []
+            unifica (Fun "f" [Fun "g" [x], Fun "f" [x, Fun "h" [z]]]) (Fun "f" [Fun "g" [x], Fun "f" [a,b]]) `shouldBe` []
 
     describe "Tests unificaConj" $ do
         it "Prueba w1" $ do
